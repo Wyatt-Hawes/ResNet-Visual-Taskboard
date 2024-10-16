@@ -4,7 +4,7 @@ import {LanesContext} from './contexts';
 import {URL} from './types';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-export default function TableHeader(props: {lane: string}) {
+export default function TableHeader(props: {lane: string, ticketCounts: {}}) {
   const [openMenu, setOpenMenu] = React.useState(null);
   const {lanes, setLanes} = React.useContext(LanesContext);
   const handleClick = (event) => {
@@ -71,7 +71,7 @@ export default function TableHeader(props: {lane: string}) {
         onClick={handleClick}
         style={{width: '275px'}}
       >
-        {props.lane}
+        {props.lane + ` [${props.ticketCounts[props.lane] ? props.ticketCounts[props.lane]: 0}]`}
       </TableCell>
       <Menu
         id="simple-menu"

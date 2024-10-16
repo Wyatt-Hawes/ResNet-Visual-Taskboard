@@ -18,7 +18,9 @@ export default function TicketTable() {
   const {setLoggedIn} = React.useContext(LoginContext);
   const {lanes, setLanes} = React.useContext(LanesContext);
 
-  const updateFrequencyMS = 1000;
+  const [ticketCount, setTicketCount] = React.useState({});
+
+  const updateFrequencyMS = 1500;
 
   React.useEffect(() => {
     fetchTickets();
@@ -28,6 +30,10 @@ export default function TicketTable() {
       fetchLanes();
     }, updateFrequencyMS);
   }, []);
+
+  React.useEffect(()=>{
+      updateTicketCount();
+  },[tickets])
 
   function fetchTickets() {
     fetch(URL + '/v0/ticket', {
@@ -78,6 +84,17 @@ export default function TicketTable() {
       });
   }
 
+  function updateTicketCount(){
+    const tc = {};
+    tickets.forEach((ticket)=>{
+      if(!tc[ticket.lane]){
+        tc[ticket.lane] = 0;
+      }
+      tc[ticket.lane]++;
+    })
+    setTicketCount(tc);
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table
@@ -89,7 +106,7 @@ export default function TicketTable() {
         <TableHead>
           <TableRow>
             {lanes.map((lane) => (
-              <TableHeader key={lane} lane={lane}></TableHeader>
+              <TableHeader key={lane} lane={lane} ticketCounts={ticketCount}></TableHeader>
             ))}
           </TableRow>
         </TableHead>
@@ -99,15 +116,15 @@ export default function TicketTable() {
             {lanes.map((lane) => (
               <TableCell
                 // VerticalAlign: 'text-bottom' does similar to alignContent, it just fixes ticket positions on Wilson
-                sx={{width: '100px', alignContent: 'baseline', verticalAlign: 'text-bottom'}}
+                sx={{paddingTop: '0px',paddingLeft:'1px',paddingRight:'1px', width: '100px', alignContent: 'baseline', verticalAlign: 'text-bottom'}}
                 key={'ticket section ' + lane}
               >
                 {/**Now iterate through the tickets */}
-                <List key={'list section ' + lane}>
+                <List key={'list section ' + lane} >
                   {tickets.map((ticket: ResNetTicket, index) => {
                     if (ticket.lane == lane) {
                       return (
-                        <ListItem key={ticket.number}>
+                        <ListItem key={ticket.number} sx={{padding:'1px'}}>
                           {/**Pass ticket down */}
                           <Ticket ticket={ticket} />
                         </ListItem>

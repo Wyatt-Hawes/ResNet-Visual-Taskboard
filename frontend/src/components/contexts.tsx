@@ -1,7 +1,7 @@
 import React from 'react';
 import {ResNetTicket} from './types';
 export const TicketContext = React.createContext({
-  tickets: [],
+  tickets: [] as ResNetTicket[],
   setTickets: (newVal) => {},
 });
 
