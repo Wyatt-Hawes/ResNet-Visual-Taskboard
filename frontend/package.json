@@ -1,0 +1,44 @@
+{
+  "name": "Virtual Taskboard Frontend",
+  "type": "module",
+  "version": "3.0.0",
+  "description": "Virtual Taskboard Frontend",
+  "author": "Wyatt Hawes",
+  "repository": "none",
+  "dependencies": {
+    "@emotion/react": "*",
+    "@emotion/styled": "*",
+    "@mui/icons-material": "*",
+    "@mui/material": "*",
+    "prop-types": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router-dom": "*"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "*",
+    "@testing-library/dom": "*",
+    "@testing-library/react": "*",
+    "@testing-library/user-event": "*",
+    "@vitejs/plugin-react": "*",
+    "@vitest/coverage-v8": "*",
+    "bestzip": "*",
+    "eslint": "*",
+    "eslint-config-google": "*",
+    "eslint-plugin-react": "*",
+    "eslint-plugin-react-hooks": "*",
+    "eslint-plugin-react-refresh": "*",
+    "jsdom": "*",
+    "msw": "*",
+    "vite": "*",
+    "vite-plugin-eslint": "*",
+    "vitest": "*"
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --port 3000",
+    "host": "vite --port 80 --host",
+    "lint": "eslint src --ext js,jsx --no-inline-config --max-warnings 0",
+    "test": "vitest run --coverage"
+  }
+}

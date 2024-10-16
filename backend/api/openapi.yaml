@@ -1,0 +1,174 @@
+openapi: '3.0.3'
+
+info:
+  version: 0.1.0
+  title: Visual Taskboard Backend
+
+servers:
+  - url: http://localhost:3010/v0
+  #- url: http://128.114.140.150/v0
+
+paths:
+  # Here is the /ticket path, below it it lists the get endpoint. You should be able to copy this and change /ticket and get to add a new endpoint
+  /ticket:
+    get:
+      security:
+        - bearerAuth: []
+      description: Gets all tickets
+      responses:
+        200:
+          description: Succesful
+          content:
+            application/json: {}
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      security:
+        - bearerAuth: []
+      description: 'Move a ticket to another lane'
+
+      # Here is how you would take parameters for an endpoint
+      parameters:
+        - in: query
+          name: 'number'
+          description: 'The number of the ticket to move'
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: 'lane'
+          description: 'The lane to move the ticket to'
+          required: true
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Succesful
+          content:
+            application/json: {}
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /lane:
+    get:
+      security:
+        - bearerAuth: []
+      description: Gets all lanes
+      responses:
+        200:
+          description: Succesful
+          content:
+            application/json: {}
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      security:
+        - bearerAuth: []
+      description: 'Move a lanes position'
+      parameters:
+        - in: query
+          name: 'lane'
+          description: 'The lane to move'
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: 'position'
+          description: 'The position to move the lane to'
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Succesful
+          content:
+            application/json: {}
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      security:
+        - bearerAuth: []
+      description: 'Delete a lane'
+      parameters:
+        - in: query
+          name: 'lane'
+          description: 'The lane to delete'
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Succesful
+          content:
+            application/json: {}
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /login:
+    post:
+      description: Login with a given username and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        200:
+          description: Succesful
+          content:
+            application/json: {}
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Error:
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      additionalProperties: false
+      required:
+        - username
+        - password
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
