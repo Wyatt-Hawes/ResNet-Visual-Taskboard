@@ -34,7 +34,7 @@ function load() {
     }
   );
   let abr = JSON.parse(data2);
-  console.log('Abbreviations updated:', abr.length);
+  console.log('Abbreviations updated:', Object.keys(abr).length);
   abbreviations = abr;
   return {'lanes':l, 'abbreviations':abr};
 }

@@ -6,6 +6,7 @@ const lane = require('./lane');
 
 let processed_tickets = {};
 let {lanes, abbreviations} = lane.getLanes();
+let abbrev_to_name = swapKeysAndValues(abbreviations);
 
 // Run the python script that gets ticket info from ServiceNow API
 const pythonScript = spawn('python', [updateScript]);
@@ -87,7 +88,8 @@ function syncTaskboard() {
   const allTickets = readAllTicketsFromFile();
   const updatedTickets = readClientUpdatedFromFile();
   const staleTickets = readStaleTicketsFromFile();
-  const allAbbreviations = Object.keys(abbreviations);
+  const allAbbreviations = Object.values(abbreviations);
+  abbrev_to_name = swapKeysAndValues(abbreviations);
 
   clearTickets();
   
@@ -102,14 +104,15 @@ function syncTaskboard() {
       t.client_responded = false;
       t.is_stale = false;
 
-      // Update short description just incase it was changed
+      // Update short description / description just incase it was changed
       t.short_description = ticket.short_description;
+      t.description = ticket.description;
 
       // Lets check the abbreviation it has, if it has one, move the ticket to that lane
       const tag = extractTag(t.description);
+      
       if(tag && allAbbreviations.includes(tag)){
-        t.lane = abbreviations[tag];
-        console.log('found tag')
+        t.lane = abbrev_to_name[tag];
       }
       
 
@@ -241,4 +244,14 @@ function extractTag(inputString) {
   }
   
   return null; // Return null if the pattern is not found
+}
+
+function swapKeysAndValues(obj) {
+  const swappedObj = {};
+
+  for (const key in obj) {
+    swappedObj[obj[key]] = key;
+  }
+
+  return swappedObj;
 }
