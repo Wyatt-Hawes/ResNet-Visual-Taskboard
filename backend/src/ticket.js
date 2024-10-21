@@ -5,7 +5,7 @@ const updateScript = path.resolve(__dirname, '../../ServiceNow.py');
 const lane = require('./lane');
 
 let processed_tickets = {};
-let lanes = lane.getLanes();
+let {lanes, abbreviations} = lane.getLanes();
 
 // Run the python script that gets ticket info from ServiceNow API
 const pythonScript = spawn('python', [updateScript]);
@@ -80,7 +80,9 @@ function clearTickets() {
 
 // Syncs taskboard with all current data & state
 function syncTaskboard() {
-  lanes = lane.getLanes();
+   let v = lane.getLanes();
+   lanes = v.lanes; 
+   abbreviations = v.abbreviations;
   const saved_state = readTaskboardStateFromFile();
   const allTickets = readAllTicketsFromFile();
   const updatedTickets = readClientUpdatedFromFile();
@@ -212,6 +214,7 @@ function getTickets() {
     sys_created_on: item.sys_created_on,
     sys_updated_on: item.sys_updated_on,
     lane: item.lane,
+    abbreviations: abbreviations,
     client_responded: item.client_responded,
     is_stale: item.is_stale,
   }));

@@ -13,11 +13,12 @@ import SignIn from './components/SignIn';
 function App() {
   const [tickets, setTickets] = React.useState([]);
   const [lanes, setLanes] = React.useState(['New Unsorted', 'Client Updated']);
+  const [abbreviations, setAbbreviations] = React.useState({'New Unsorted':'nu', 'Client Updated': 'cu'})
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   return (
     <TicketContext.Provider value={{tickets, setTickets}}>
-      <LanesContext.Provider value={{lanes, setLanes}}>
+      <LanesContext.Provider value={{lanes, setLanes, abbreviations, setAbbreviations}}>
         <LoginContext.Provider value={{loggedIn, setLoggedIn}}>
           {loggedIn ? (
             <>

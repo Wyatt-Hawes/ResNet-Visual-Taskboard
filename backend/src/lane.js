@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 let lanes = ['New Unsorted', 'Client Updated'];
+let abbreviations = {'New Unsorted': 'nu', 'Client Updated': 'cu'}
 load();
 save();
 
@@ -33,10 +34,13 @@ function save() {
     path.resolve(__dirname, '../../taskboard_lanes.json'),
     JSON.stringify(lanes)
   );
+  fs.writeFileSync(    
+    path.resolve(__dirname, '../../taskboard_abbreviations.json'),
+    JSON.stringify(lanes));
 }
 
 exports.getLanes = () => {
-  return lanes;
+  return {'lanes': lanes, 'abbreviations': abbreviations};
 };
 
 // Same as load from above but exporting this function
@@ -51,22 +55,35 @@ exports.loadLanes = () => {
   let l = JSON.parse(data);
   console.log('lanes updated:', l.length);
   lanes = l;
-  return l;
+
+  const data2 = fs.readFileSync(
+    path.resolve(__dirname, '../../taskboard_lanes.json'),
+    {
+      encoding: 'utf-8',
+      flag: 'r',
+    }
+  );
+  let abr = JSON.parse(data);
+  console.log('Abbreviations updated:', abr.length);
+  abbreviations = abr;
+  return {'lanes':l, 'abbreviations':abr};
 };
 
 exports.get = async (req, res) => {
   res.status(200).json({
-    lanes: lanes,
+    'lanes': lanes,
+    'abbreviations': abbreviations
   });
 };
 
 // Move a lane to occur at a specific index
 exports.move = async (req, res) => {
-  const {position, lane} = req.query;
+  const {position, lane, abbreviation} = req.query;
 
   // Lane doesnt exist, add it
   if (!lanes.includes(lane)) {
     lanes.push(lane);
+    abbreviations[lane] = abbreviation.toLowerCase();
     save();
   } else {
     let laneCopy = lanes;
@@ -81,7 +98,8 @@ exports.move = async (req, res) => {
     lanes = laneCopy;
   }
   res.status(200).json({
-    lanes: lanes,
+    'lanes': lanes,
+    'abbreviations': abbreviations
   });
   save();
 };
@@ -92,14 +110,17 @@ exports.delete = async (req, res) => {
 
   if (!lanes.includes(lane)) {
     res.status(200).json({
-      lanes: lanes,
+      'lanes': lanes,
+      'abbreviations': abbreviations
     });
   }
 
   const index = lanes.indexOf(lane);
   lanes.splice(index, 1);
+  delete abbreviations[lane];
   res.status(200).json({
-    lanes: lanes,
+    'lanes': lanes,
+    'abbreviations': abbreviations
   });
   save();
 };
@@ -109,4 +130,9 @@ exports.saveLanes = () => {
     path.resolve(__dirname, '../../taskboard_lanes.json'),
     JSON.stringify(lanes)
   );
+
+  fs.writeFileSync(    
+    path.resolve(__dirname, '../../taskboard_abbreviations.json'),
+    JSON.stringify(lanes));
 };
+

@@ -86,6 +86,11 @@ paths:
           schema:
             type: string
         - in: query
+          name: 'abbreviation'
+          description: 'Abbreviation of the lane'
+          schema:
+            type: string
+        - in: query
           name: 'position'
           description: 'The position to move the lane to'
           schema:

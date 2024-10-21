@@ -7,11 +7,16 @@ import {LanesContext} from './contexts';
 
 export default function AddLaneButton() {
   const [laneText, setLaneText] = React.useState('');
-  const {setLanes} = React.useContext(LanesContext);
+  const [abrtxt, setAbrtxt] = React.useState('');
+  const {setLanes, setAbbreviations} = React.useContext(LanesContext);
 
   // This is what sends the request to the server to add the lane
-  function AddLane(lane: string) {
-    fetch(URL + `/v0/lane?lane=${lane}`, {
+  function AddLane(lane: string, abbreviation: string) {
+    // If either are empty, dont send the request
+    if(!lane || !abbreviation){
+      return;
+    }
+    fetch(URL + `/v0/lane?lane=${lane}&abbreviation=${abbreviation}`, {
       method: 'POST',
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('user')}`,
@@ -26,7 +31,9 @@ export default function AddLaneButton() {
       })
       .then((json) => {
         setLanes(json.lanes);
+        setAbbreviations(json.abbreviations);
         setLaneText('');
+        setAbrtxt('');
       })
       .catch((err) => {
         console.log('ERROR:', err);
@@ -45,7 +52,32 @@ export default function AddLaneButton() {
         }}
         component="form"
         onSubmit={(event) => {
-          AddLane(laneText);
+          AddLane(laneText, abrtxt);
+          event.preventDefault();
+        }}
+        inputProps={{style: {color: 'white'}}}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            // Target the root element
+            '& fieldset': {
+              // Target the fieldset element within the root
+              borderColor: 'white', // Set your desired outline color
+            },
+          },
+        }}
+      />
+      <TextField
+        id="outlined-basic"
+        label="Abbreviation"
+        variant="outlined"
+        value={abrtxt}
+        
+        onChange={(event) => {
+          setAbrtxt(event.target.value);
+        }}
+        component="form"
+        onSubmit={(event) => {
+          AddLane(laneText, abrtxt);
           event.preventDefault();
         }}
         inputProps={{style: {color: 'white'}}}
@@ -62,7 +94,7 @@ export default function AddLaneButton() {
       <IconButton
         onClick={() => {
           console.log('adding:', laneText);
-          AddLane(laneText);
+          AddLane(laneText, abrtxt);
         }}
       >
         <AddCircleOutlineIcon fontSize="large" style={{color: 'white'}} />

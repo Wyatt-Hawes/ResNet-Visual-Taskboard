@@ -16,7 +16,7 @@ import TableHeader from './tableHeader';
 export default function TicketTable() {
   const {tickets, setTickets} = React.useContext(TicketContext);
   const {setLoggedIn} = React.useContext(LoginContext);
-  const {lanes, setLanes} = React.useContext(LanesContext);
+  const {lanes, setLanes, abbreviations, setAbbreviations} = React.useContext(LanesContext);
 
   const [ticketCount, setTicketCount] = React.useState({});
 
@@ -78,6 +78,7 @@ export default function TicketTable() {
       })
       .then((json) => {
         setLanes(json.lanes);
+        setAbbreviations(json.abbreviations)
       })
       .catch((err) => {
         console.log('ERROR:', err);
@@ -106,7 +107,7 @@ export default function TicketTable() {
         <TableHead>
           <TableRow>
             {lanes.map((lane) => (
-              <TableHeader key={lane} lane={lane} ticketCounts={ticketCount}></TableHeader>
+              <TableHeader key={lane} lane={lane} abbreviation={abbreviations[lane]} ticketCounts={ticketCount}></TableHeader>
             ))}
           </TableRow>
         </TableHead>
