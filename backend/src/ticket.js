@@ -87,8 +87,11 @@ function syncTaskboard() {
   const allTickets = readAllTicketsFromFile();
   const updatedTickets = readClientUpdatedFromFile();
   const staleTickets = readStaleTicketsFromFile();
+  const allAbbreviations = Object.keys(abbreviations);
 
   clearTickets();
+  
+
 
   // Process all new tickets
   allTickets.forEach((ticket) => {
@@ -101,6 +104,14 @@ function syncTaskboard() {
 
       // Update short description just incase it was changed
       t.short_description = ticket.short_description;
+
+      // Lets check the abbreviation it has, if it has one, move the ticket to that lane
+      const tag = extractTag(t.description);
+      if(tag && allAbbreviations.includes(tag)){
+        t.lane = abbreviations[tag];
+        console.log('found tag')
+      }
+      
 
       if (!lanes.includes(t.lane)) {
         t.lane = 'New Unsorted';
@@ -139,7 +150,7 @@ function syncTaskboard() {
   // Now go through client updated and update tickets needing to be changed
   updatedTickets.forEach((ticket) => {
     // Set the lane and the client responded
-    // This IF check line automatically moves tickets that are in client updated to the client updated lane
+    // Only move if the lane isnt set for some reason
     if (processed_tickets[ticket.number].lane == undefined) {
       processed_tickets[ticket.number].lane = 'New Unsorted';
     }
@@ -219,4 +230,15 @@ function getTickets() {
     is_stale: item.is_stale,
   }));
   return t;
+}
+
+function extractTag(inputString) {
+  const regex = /!(.*?)!/;
+  const match = inputString.match(regex);
+  
+  if (match && match[1]) {
+      return match[1]; // This will return 'my_text'
+  }
+  
+  return null; // Return null if the pattern is not found
 }

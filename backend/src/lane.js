@@ -25,7 +25,18 @@ function load() {
     lanes = ['New Unsorted', 'Client Updated'];
   }
   lanes = l;
-  return l;
+
+  const data2 = fs.readFileSync(
+    path.resolve(__dirname, '../../taskboard_abbreviations.json'),
+    {
+      encoding: 'utf-8',
+      flag: 'r',
+    }
+  );
+  let abr = JSON.parse(data2);
+  console.log('Abbreviations updated:', abr.length);
+  abbreviations = abr;
+  return {'lanes':l, 'abbreviations':abr};
 }
 
 // Save lanes to JSON file
@@ -36,7 +47,7 @@ function save() {
   );
   fs.writeFileSync(    
     path.resolve(__dirname, '../../taskboard_abbreviations.json'),
-    JSON.stringify(lanes));
+    JSON.stringify(abbreviations));
 }
 
 exports.getLanes = () => {
@@ -57,13 +68,13 @@ exports.loadLanes = () => {
   lanes = l;
 
   const data2 = fs.readFileSync(
-    path.resolve(__dirname, '../../taskboard_lanes.json'),
+    path.resolve(__dirname, '../../taskboard_abbreviations.json'),
     {
       encoding: 'utf-8',
       flag: 'r',
     }
   );
-  let abr = JSON.parse(data);
+  let abr = JSON.parse(data2);
   console.log('Abbreviations updated:', abr.length);
   abbreviations = abr;
   return {'lanes':l, 'abbreviations':abr};
@@ -133,6 +144,6 @@ exports.saveLanes = () => {
 
   fs.writeFileSync(    
     path.resolve(__dirname, '../../taskboard_abbreviations.json'),
-    JSON.stringify(lanes));
+    JSON.stringify(abbreviations));
 };
 
