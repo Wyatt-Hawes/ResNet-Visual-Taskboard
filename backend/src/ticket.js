@@ -137,7 +137,7 @@ function syncTaskboard() {
   // Now go through client updated and update tickets needing to be changed
   updatedTickets.forEach((ticket) => {
     // Set the lane and the client responded
-    ticket.lane = 'Client Updated';
+    // ticket.lane = 'Client Updated'; // This line automatically moves tickets that are in client updated to the client updated lane
     ticket.client_responded = true;
     processed_tickets[ticket.number] = ticket;
   });
