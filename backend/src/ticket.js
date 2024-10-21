@@ -9,7 +9,7 @@ let {lanes, abbreviations} = lane.getLanes();
 let abbrev_to_name = swapKeysAndValues(abbreviations);
 
 // Run the python script that gets ticket info from ServiceNow API
-const pythonScript = spawn('python', [updateScript]);
+const pythonScript = spawn('python3', [updateScript]);
 
 pythonScript.stderr.on('data',(data)=>{
   console.log(`Script Error:${data}`)
@@ -30,7 +30,7 @@ setInterval(() => {
 // The new Tickets
 setInterval(() => {
   console.log('-------------------------');
-  const pythonScript = spawn('python', [updateScript]);
+  const pythonScript = spawn('python3', [updateScript]);
   pythonScript.on('close', () => {
     syncTaskboard();
     console.log('-------------------------');
