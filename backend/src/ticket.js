@@ -138,9 +138,9 @@ function syncTaskboard() {
   updatedTickets.forEach((ticket) => {
     // Set the lane and the client responded
     // This IF check line automatically moves tickets that are in client updated to the client updated lane
-    //if(processed_tickets[ticket.number].lane == undefined){ 
-      processed_tickets[ticket.number].lane = 'Client Updated'
-    //}
+    if(processed_tickets[ticket.number].lane == undefined){ 
+      ticket.lane = 'Client Updated'
+    }
     ticket.client_responded = true;
     processed_tickets[ticket.number] = ticket;
   });
