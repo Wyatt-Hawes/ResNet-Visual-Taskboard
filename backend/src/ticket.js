@@ -8,7 +8,7 @@ let processed_tickets = {};
 let lanes = lane.getLanes();
 
 // Run the python script that gets ticket info from ServiceNow API
-const pythonScript = spawn('python3', [updateScript]);
+const pythonScript = spawn('python', [updateScript]);
 
 pythonScript.stderr.on('data',(data)=>{
   console.log(`Script Error:${data}`)
@@ -29,7 +29,7 @@ setInterval(() => {
 // The new Tickets
 setInterval(() => {
   console.log('-------------------------');
-  const pythonScript = spawn('python3', [updateScript]);
+  const pythonScript = spawn('python', [updateScript]);
   pythonScript.on('close', () => {
     syncTaskboard();
     console.log('-------------------------');
@@ -138,9 +138,10 @@ function syncTaskboard() {
   updatedTickets.forEach((ticket) => {
     // Set the lane and the client responded
     // This IF check line automatically moves tickets that are in client updated to the client updated lane
-    if(processed_tickets[ticket.number].lane == undefined){ 
+    //if(processed_tickets[ticket.number].lane == 'New Unsorted'){ 
+    //  console.log('setting lane')
       ticket.lane = 'Client Updated'
-    }
+    //}
     ticket.client_responded = true;
     processed_tickets[ticket.number] = ticket;
   });
