@@ -111,9 +111,14 @@ function syncTaskboard() {
 
       // *** HERE IS THE ABBREVIATION MOVEMENT
       // Lets check the abbreviation it has, if it has one, move the ticket to that lane
-      const tag = extractTag(t.description);
-      if(tag && allAbbreviations.includes(tag)){
-        t.lane = abbrev_to_name[tag];
+      const enable_abbreviation_movement = true; // set true to false to disable ticket movement
+
+      if(enable_abbreviation_movement){
+
+        const tag = extractTag(t.description);
+        if(tag && allAbbreviations.includes(tag)){
+          t.lane = abbrev_to_name[tag];
+        }
       }
       // **** END OF ABBREVIATION MOVEMENT
       
