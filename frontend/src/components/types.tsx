@@ -6,6 +6,7 @@ export interface ResNetTicket {
   lane: string;
   client_responded: boolean;
   is_stale: boolean;
+  is_red: boolean;
 }
 
 export const lanes = [

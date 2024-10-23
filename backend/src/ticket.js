@@ -102,6 +102,7 @@ function syncTaskboard() {
       // Reset the updated status of the ticket
       const t = saved_state[ticket.number];
       t.client_responded = false;
+      t.is_red = false;
       t.is_stale = false;
 
       // Update short description / description just incase it was changed
@@ -140,6 +141,7 @@ function syncTaskboard() {
     ticket.lane = 'New Unsorted';
     ticket.client_responded = false;
     ticket.is_stale = false;
+    ticket.is_red = false;
 
     // Finally assign it to map
     processed_tickets[ticket.number] = ticket;
@@ -167,6 +169,11 @@ function syncTaskboard() {
 
     // So it can show up yellow
     processed_tickets[ticket.number].client_responded = true;
+
+    // Ticket has no assigned to
+    if(!processed_tickets[ticket.number].assigned_to){
+      processed_tickets[ticket.number].is_red = true;
+    }
   });
 
   // Log to show taskboard has finished syncing
@@ -237,6 +244,7 @@ function getTickets() {
     lane: item.lane,
     abbreviations: abbreviations,
     client_responded: item.client_responded,
+    is_red: item.is_red,
     is_stale: item.is_stale,
   }));
   return t;

@@ -80,7 +80,8 @@ export default function Ticket(props: {ticket: ResNetTicket}) {
         // stale ticket color.
         // ? is 'if true', : is 'if false'
         backgroundColor: 
-          props.ticket.client_responded
+          props.ticket.is_red ? '#ff6565' 
+          : props.ticket.client_responded
           ? 'yellow' // client responded color
           : props.ticket.is_stale
           ? 'lightblue' // stale color
