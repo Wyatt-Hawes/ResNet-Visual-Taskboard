@@ -68,7 +68,7 @@ export default function AddLaneButton() {
       />
       <TextField
         id="outlined-basic"
-        label="Abbreviation"
+        label="Tag"
         variant="outlined"
         value={abrtxt}
         
