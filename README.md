@@ -2,6 +2,10 @@
 
 # Static IP is: `128.114.140.150`
 
+# How can I enable/disable ticket tags & automated movement?
+
+### In the `ticket.js` file, search for the variable `enable_abbreviation_movement` and set it to `false`. Save the file and automated ticket movement will be disabled
+
 # So how do I run this thing
 
 ### After ensuring that the IP address in `backend/api/openapi.yaml` **AND** `frontend/vite.config.js` both match the IP address of the device hosting the servers
@@ -10,6 +14,24 @@
 2. Navigate to the root folder of the project (The folder that contains the `frontend` & `backend` folders)
 3. In one terminal, type `npm run start-frontend`. This will start the website.
 4. In the other terminal, type `npm run start-backend`. This will start the backend server.
+
+### Also make sure **BOTH** `.env` fies have been filled out with the same information. (One is in the `root` directory, the other is in `/backend`)
+
+### The `.env` in **BOTH** files **MUST** contain the following information
+```
+PORT= 3000
+
+# This is the ServiceNow API username & password
+# If you dont know what it is, look at the dashboards .env
+USER_NAME=
+PASSWORD=
+
+# This is the login that you want for the taskboard
+# The secret is used to hash the password, it can be any random string of characters
+ACCOUNT_NAME=
+ACCOUNT_PASSWORD=
+SECRET=
+```
 
 <br><br>
 
