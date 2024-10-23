@@ -5,3 +5,5 @@ osascript -e 'tell application "Terminal" to do script "cd Desktop/ResNet-Visual
 
 # Open backend terminal window
 osascript -e 'tell application "Terminal" to do script "cd Desktop/ResNet-Visual-Taskboard && npm run host"'
+
+exit

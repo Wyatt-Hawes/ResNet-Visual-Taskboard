@@ -7,7 +7,15 @@
 ### In the `ticket.js` file, search for the variable `enable_abbreviation_movement` and set it to `false`. Save the file and automated ticket movement will be disabled
 
 # So how do I run this thing
+# New Way
+### Double click `RUN_ME_TASKBOARD.command`
 
+### If for some reason, the script file is deleted, copy `starting_script.command` to the desktop and rename it `RUN_ME_TASKBOARD.command`, open a terminal and navigate to the desktop and type `chmod +x RUN_ME_TASKBOARD.command`
+
+
+
+
+# OLD WAY
 ### After ensuring that the IP address in `backend/api/openapi.yaml` **AND** `frontend/vite.config.js` both match the IP address of the device hosting the servers
 
 1. Open 2 Terminals
