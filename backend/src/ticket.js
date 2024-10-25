@@ -108,6 +108,7 @@ function syncTaskboard() {
       // Update short description / description just incase it was changed
       t.short_description = ticket.short_description;
       t.description = ticket.description;
+      t.assigned_to = ticket.assigned_to;
 
 
       // *** HERE IS THE ABBREVIATION MOVEMENT
