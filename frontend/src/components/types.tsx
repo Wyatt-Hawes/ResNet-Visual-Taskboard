@@ -20,6 +20,6 @@ export const lanes = [
 ];
 
 export const ticketURL =
-  'https://slughub.ucsc.edu/now/nav/ui/classic/params/target/incident.do%3Fsysparm_query%3Dnumber%253D';
+  'https://ucsc.service-now.com/now/nav/ui/classic/params/target/incident.do%3Fsysparm_query%3Dnumber%253D';
 export const URL =
   window.location.protocol + '//' + window.location.hostname + ':3010';
