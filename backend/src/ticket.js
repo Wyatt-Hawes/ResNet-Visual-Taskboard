@@ -105,7 +105,7 @@ function syncTaskboard() {
       t.is_red = false;
       t.is_stale = false;
 
-      // Update short description / description just incase it was changed
+      // Update specific fields that could have changed
       t.short_description = ticket.short_description;
       t.description = ticket.description;
       t.assigned_to = ticket.assigned_to;
