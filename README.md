@@ -2,6 +2,64 @@
 
 ![Architecture](Architecture.png "Visual Taskboard Architecture")
 
+# General Use
+------------------------
+
+*   Visit [resnet-taskboard.ucsc.edu/](http://resnet-taskboard.ucsc.edu/)
+*   Login with the username "ResNet" (case sensitive) and login with the same password you use to login
+
+Note: You must be on a campus network or VPN (ResWiFi, eduroam, etc.) to view the page **Ticket Info** A Ticket shown has a lot of useful information available at a glance.
+
+*   White: The ticket has been worked on, it is not stale & client has not updated it
+*   Blue: The ticket is stale and it has been 2 days since we have contacted the client
+*   Yellow: The client has updated the ticket
+*   Red: Same as the dashboard, the ticket is new & is not assigned yet
+*   Days: In the bottom right, the days since the CLIENT has responded, for example a white ticket with the day showing 10 days means we have 1) Contacted the client in the past 2 days (since it's white) 2) The client has NOT sent us a response in 10 days
+*   Popout: In the top right, click on the popout icon to open the ticket in a new tab
+*   Number: The ticket number
+*   Short Description: The tickets short description
+
+**Moving Tickets** 
+
+Using the dashboard should hopefully be self explanatory. To move a ticket,
+
+*   Click on the ticket
+*   Click on the lane that you want to move it to from the drop down
+
+NOTE: TICKETS WILL NOT MOVE MANUALLY IF THEY HAVE A TAG 
+
+**Opening Tickets**
+
+*   Click on the Popout icon in the top right and it will open the ticket in servicenow in a new tab
+
+**Tagging Tickets for automatic movement** 
+
+To tag a ticket to a lane, add **!lane\_tag!** anywhere in the description, this tag MUST MATCH the tag of a lane for the ticket to be moved, or else it will be ignored. For example, if I wanted to tag a ticket to the ResWiFi-Devices lane, I would check to see that its tag is "rwd", so I would add **!rwd!** somewhere to the description of the ticket. Due to limitations, the tag MUST BE inside the LONG DESCRIPTION of a ticket, putting it in the Short Description or Tech Notes will NOT WORK 
+
+**Adding Lanes**,
+
+*   Write the lane name and its ticket tag in the two text boxes,
+*   Press ENTER or click on the + icon. This will add the lane
+
+**Moving Lanes**
+
+*   Click on a lane and then from the dropdown
+*   Click where you want the Lane to move to.
+
+**Deleting Lanes**
+
+*   Click on a lane and scroll down in the menu
+*   Select the Trash icon
+
+**Starting the Taskboard** To start the taskboard, go to the Office MAC and on the Desktop, double click the file **RUN\_ME\_TASKBOARD.command** For more info & troubleshooting info/steps, visit the [Github Repository's README](https://github.com/Wyatt-Hawes/ResNet-Visual-Taskboard) or contact Wyatt :)
+
+
+-----------------------
+
+
+
+
+
 # If you need to move the server, the static IP is : `128.114.140.150`
 ### Remember, you must be connected to `ResWiFi` or `eduroam`
 
