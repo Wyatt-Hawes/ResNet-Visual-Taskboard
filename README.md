@@ -2,7 +2,8 @@
 
 ![Architecture](Architecture.png "Visual Taskboard Architecture")
 
-# Static IP is: `128.114.140.150`
+# If you need to move the server, the static IP is : `128.114.140.150`
+### Remember, you must be connected to `ResWiFi` or `eduroam`
 
 # How can I enable/disable ticket tags & automated movement?
 
