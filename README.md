@@ -1,7 +1,7 @@
 # ResNet Visual Taskboard
 
 (Some information blurred)
-![demo](Screenshot-Blurred.PNG "Taskboard View")
+![demo](Demo-Blurred.PNG "Taskboard View")
 
 ![Architecture](Architecture.png "Visual Taskboard Architecture")
 
